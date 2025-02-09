@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>A8SetA4 Number to Words</title>
+</head>
+
+<body>
+    <script>
+
+        let numberInput = prompt("Enter a number:");
+
+        const words = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"];
+        let wordResult = "";
+
+        for (let i = 0; i < numberInput.length; i++) 
+        {
+            const digit = numberInput[i];
+
+            if (!isNaN(digit)) {
+                wordResult += words[parseInt(digit)] + " ";
+            } 
+            else 
+            {
+                wordResult = "Invalid Input";
+                break;
+            }
+        }
+
+        document.write("<h2>Number in Words:</h2>");
+        document.write("<p>" + wordResult + "</p>");
+    </script>
+</body>
+
+</html>

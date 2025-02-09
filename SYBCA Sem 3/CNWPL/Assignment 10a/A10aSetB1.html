@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematical Operations</title>
+    <script>
+        function operations() {
+            const num = Number(document.getElementById("num").value);
+            const choice = Number(document.getElementById("choice").value);
+            const disResult = document.getElementById("result");
+
+            if (!num || !choice) {
+                alert("Please fill all the fields");
+                return;
+            }
+
+            let result;
+            switch (choice) {
+                case 1:
+                    result = `Square root of ${num} is ${Math.sqrt(num)}`;
+                    break;
+                case 2:
+                    const power = Number(prompt("Enter power"));
+                    result = `${power} raised to the power of ${num} is ${Math.pow(num, power)}`;
+                    break;
+                case 3:
+                    result = `Absolute value of ${num} is ${Math.abs(num)}`;
+                    break;
+                default:
+                    alert("Invalid");
+                    return;
+            }
+            disResult.innerText = result;
+        }
+    </script>
+</head>
+<body>
+    <h1>Mathematical Operations</h1>
+    <form onsubmit="operations(); return false;">
+        <input type="number" id="num" placeholder="Enter number" required>
+        <select id="choice" required>
+            <option value="">Select operation</option>
+            <option value="1">Square root</option>
+            <option value="2">Power</option>
+            <option value="3">Absolute value</option>
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+    <h3>Result</h3>
+    <div id="result"></div>
+</body>
+</html>
