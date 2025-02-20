@@ -1,33 +1,39 @@
 <?php
-interface Shape {
+interface Shape
+{
     public function area();
     public function volume();
 }
 
-class Cylinder implements Shape {
+class Cylinder implements Shape
+{
     private $radius;
     private $height;
-    
+
     public const PI = 3.14159;
 
-    public function __construct($r, $h) {
+    public function __construct($r, $h)
+    {
         $this->radius = $r;
         $this->height = $h;
     }
-    
-    public function display(){
-        echo "Radius: " . $this->radius . "\n";
-        echo "Height: " . $this->height . "\n";
+
+    public function display()
+    {
+        echo "Radius: " . $this->radius . "<br>";
+        echo "Height: " . $this->height . "<br>";
     }
 
-    public function area() {
+    public function area()
+    {
         $area = 2 * self::PI * $this->radius * $this->height + 2 * self::PI * ($this->radius * $this->radius);
-        echo "Surface Area of Cylinder: " . $area . "\n";
+        echo "Surface Area of Cylinder: " . $area . "<br>";
     }
 
-    public function volume() {
+    public function volume()
+    {
         $volume = self::PI * ($this->radius * $this->radius) * $this->height;
-        echo "Volume of Cylinder: " . $volume . "\n";
+        echo "Volume of Cylinder: " . $volume . "<br>";
     }
 }
 
