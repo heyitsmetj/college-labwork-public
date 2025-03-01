@@ -9,7 +9,11 @@ private:
     int meters, centimeters;
 
 public:
-    DM() : meters(0), centimeters(0) {}
+    DM()
+    {
+        meters = 0;
+        centimeters = 0;
+    }
 
     void getData()
     {
