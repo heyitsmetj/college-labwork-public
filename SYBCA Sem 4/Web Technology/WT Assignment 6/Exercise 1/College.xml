@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<ABC_College>
+    <Computer_Application_Department>
+        <Course>BCA(Science)</Course>
+        <Student_Strength>80</Student_Strength>
+        <Nomber_of_Teachers>12</Nomber_of_Teachers>
+    </Computer_Application_Department>
+</ABC_College>

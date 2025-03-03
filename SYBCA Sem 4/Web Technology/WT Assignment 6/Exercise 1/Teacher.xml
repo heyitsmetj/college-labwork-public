@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<Department>
+    <ComputerScience>
+        <Teacher>
+            <Name>Ram</Name>
+            <Qualification>NET</Qualification>
+            <SubjectTaught>Data Structures</SubjectTaught>
+            <Experience>5 years</Experience>
+        </Teacher>
+        <Teacher>
+            <Name>Shyaam</Name>
+            <Qualification>NET</Qualification>
+            <SubjectTaught>Machine Learning</SubjectTaught>
+            <Experience>7 years</Experience>
+        </Teacher>
+        <Teacher>
+            <Name>Anjali</Name>
+            <Qualification>NET</Qualification>
+            <SubjectTaught>Operating Systems</SubjectTaught>
+            <Experience>6 years</Experience>
+        </Teacher>
+        <Teacher>
+            <Name>Akanksha</Name>
+            <Qualification>NET</Qualification>
+            <SubjectTaught>Database Management</SubjectTaught>
+            <Experience>4 years</Experience>
+        </Teacher>
+        <Teacher>
+            <Name>Manoj</Name>
+            <Qualification>NET</Qualification>
+            <SubjectTaught>Computer Networks</SubjectTaught>
+            <Experience>8 years</Experience>
+        </Teacher>
+    </ComputerScience>
+</Department>
