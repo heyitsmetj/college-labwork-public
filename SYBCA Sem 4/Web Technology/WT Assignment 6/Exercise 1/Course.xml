@@ -1,19 +1,2 @@
 <?xml version="1.0"?>
-<College>
-    <Arts>
-        <Level>UnderGraduate</Level>
-        <IntakeCapacity>300</IntakeCapacity>
-    </Arts>
-    <Science>
-        <Level>UnderGraduate</Level>
-        <IntakeCapacity>400</IntakeCapacity>
-    </Science>
-    <Commerce>
-        <Level>UnderGraduate</Level>
-        <IntakeCapacity>200</IntakeCapacity>
-    </Commerce>
-    <Management>
-    <Level>PostGraduate</Level>
-        <IntakeCapacity>100</IntakeCapacity>
-    </Management>
-</College>
+<College><Arts><Level>UnderGraduate</Level><IntakeCapacity>300</IntakeCapacity></Arts><Science><Level>UnderGraduate</Level><IntakeCapacity>400</IntakeCapacity></Science><Commerce><Level>UnderGraduate</Level><IntakeCapacity>200</IntakeCapacity></Commerce><Management><Level>PostGraduate</Level><IntakeCapacity>100</IntakeCapacity></Management></College>
