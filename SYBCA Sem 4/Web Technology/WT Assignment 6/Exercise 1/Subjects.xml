@@ -1,23 +1,2 @@
 <?xml version="1.0"?>
-<subjects>
-    <subject>
-        <code>BCA 245</code>
-        <name>Web Technology Laboratory</name>
-    </subject>
-    <subject>
-        <code>BCA 101</code>
-        <name>Computer Programming</name>
-    </subject>
-    <subject>
-        <code>BCA 202</code>
-        <name>Database Management System</name>
-    </subject>
-    <subject>
-        <code>BCA 303</code>
-        <name>Operating Systems</name>
-        </subject>
-    <subject>
-        <code>BCA 404</code>
-        <name>Software Engineering</name>
-    </subject>
-</subjects>
+<subjects><subject><code>BCA 245</code><name>Web Technology Laboratory</name></subject><subject><code>BCA 101</code><name>Computer Programming</name></subject><subject><code>BCA 202</code><name>Database Management System</name></subject><subject><code>BCA 303</code><name>Operating Systems</name></subject><subject><code>BCA 404</code><name>Software Engineering</name></subject></subjects>
