@@ -1,0 +1,42 @@
+SET C1
+
+CREATE TABLE Teacher (
+    Tno SERIAL PRIMARY KEY,
+    Name VARCHAR(50),
+    Subject VARCHAR(50),
+    Research_Area VARCHAR(100)
+);
+
+INSERT INTO Teacher (Name, Subject, Research_Area) 
+VALUES 
+('Johnny', 'Mathematics', 'Algebra'),
+('Jenny', 'Physics', 'Quantum Mechanics'),
+('Alice', 'Computer Science', 'Artificial Intelligence');
+
+SET C2
+
+CREATE TABLE Actor (
+    ano SERIAL PRIMARY KEY,
+    aname VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Movie (
+    mno SERIAL PRIMARY KEY,
+    mname VARCHAR(100) NOT NULL,
+    release_year INT,
+    ano INT REFERENCES Actor(ano)
+);
+
+-- Insert sample data
+INSERT INTO Actor (aname) VALUES
+('Leonardo DiCaprio'),
+('Tom Hanks'),
+('Scarlett Johansson');
+
+INSERT INTO Movie (mname, release_year, ano) VALUES
+('Inception', 2010, 1),
+('Titanic', 1997, 1),
+('Forrest Gump', 1994, 2),
+('Cast Away', 2000, 2),
+('Lucy', 2014, 3),
+('Black Widow', 2021, 3);

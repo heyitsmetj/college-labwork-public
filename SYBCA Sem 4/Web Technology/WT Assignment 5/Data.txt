@@ -1,0 +1,267 @@
+A5SetA1
+
+CREATE TABLE Owner (
+    oname VARCHAR(50) PRIMARY KEY,
+    address VARCHAR(100),
+    phone VARCHAR(15)
+);
+
+CREATE TABLE Property (
+    pno SERIAL PRIMARY KEY,
+    description VARCHAR(100),
+    area FLOAT,
+    oname VARCHAR(50) REFERENCES Owner(oname) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- Insert sample data
+INSERT INTO Owner (oname, address, phone) VALUES
+('John Doe', '123 Main Street', '9876543210'),
+('Jane Smith', '456 Elm Avenue', '9123456789');
+
+INSERT INTO Property (description, area, oname) VALUES
+('3 BHK Apartment', 1200, 'John Doe'),
+('Penthouse Suite', 2000, 'John Doe'),
+('2 BHK Flat', 950, 'Jane Smith'),
+('Luxury Villa', 3000, 'Jane Smith');
+
+A5SetA2
+
+CREATE TABLE Client (
+    clientno SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    address VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Sales_order (
+    sonumber SERIAL PRIMARY KEY,
+    s_order_date DATE NOT NULL,
+    clientno INT REFERENCES Client(clientno) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- Insert sample data
+INSERT INTO Client (name, address) VALUES
+('Alice Johnson', '123 Maple Street'),
+('Bob Smith', '456 Oak Avenue');
+
+INSERT INTO Sales_order (s_order_date, clientno) VALUES
+('2024-01-15', 1),
+('2024-02-10', 1),
+('2024-03-01', 2),
+('2024-03-15', 2);
+
+A5SetA3
+
+CREATE TABLE Dept (
+    dno SERIAL PRIMARY KEY,
+    dname VARCHAR(50) NOT NULL,
+    dlocation VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Emp (
+    eno SERIAL PRIMARY KEY,
+    ename VARCHAR(50) NOT NULL,
+    edesignation VARCHAR(50) NOT NULL,
+    esalary DECIMAL(10, 2),
+    dno INT REFERENCES Dept(dno) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- Insert sample data
+INSERT INTO Dept (dname, dlocation) VALUES
+('HR', 'New York'),
+('IT', 'San Francisco'),
+('Finance', 'Chicago');
+
+INSERT INTO Emp (ename, edesignation, esalary, dno) VALUES
+('Alka Seth', 'Manager', 70000, 1),
+('Brijesh Kumar', 'Executive', 50000, 1),
+('Chitra Kumar', 'Developer', 80000, 2),
+('David Dhawan', 'System Analyst', 75000, 2),
+('Esha Gupta', 'Accountant', 60000, 3);
+
+
+A5SetB1
+
+-- Create Project table
+CREATE TABLE Project (
+    pno SERIAL PRIMARY KEY,
+    pname VARCHAR(50) NOT NULL,
+    pduration INT NOT NULL,
+    pbudget DECIMAL(10, 2) NOT NULL
+);
+
+-- Create Emp table (if not already created)
+CREATE TABLE Emp (
+    eno SERIAL PRIMARY KEY,
+    ename VARCHAR(50) NOT NULL,
+    edesignation VARCHAR(50) NOT NULL,
+    esalary DECIMAL(10, 2)
+);
+
+-- Create Works_on (Junction Table)
+CREATE TABLE Works_on (
+    eno INT REFERENCES Emp(eno),
+    pno INT REFERENCES Project(pno) ON DELETE CASCADE ON UPDATE CASCADE,
+    no_of_hrs_worked INT NOT NULL,
+    PRIMARY KEY (eno, pno)
+);
+
+-- Insert sample data into Emp
+INSERT INTO Emp (ename, edesignation, esalary) VALUES
+('Alka Joshi', 'Manager', 70000),
+('Brijesh Kumar', 'Developer', 60000),
+('Chintan Sagar', 'Analyst', 65000);
+
+-- Insert sample data into Project
+INSERT INTO Project (pname, pduration, pbudget) VALUES
+('Alpha', 12, 50000),
+('Beta', 6, 30000);
+
+-- Insert sample data into Works_on
+INSERT INTO Works_on (eno, pno, no_of_hrs_worked) VALUES
+(1, 1, 120),
+(2, 1, 100),
+(2, 2, 150),
+(3, 2, 80);
+
+A5SetB2
+
+-- Insert Sample Departments
+INSERT INTO Dept (dname, dlocation) VALUES
+('HR', 'New York'),
+('IT', 'San Francisco'),
+('Finance', 'Chicago');
+
+-- Insert Sample Employees
+INSERT INTO Emp (ename, edesignation, esalary, dno) VALUES
+('Alka Yagnik', 'Manager', 75000, 1),
+('Binod Tharu', 'Executive', 60000, 1),
+('Chinmay Mandlik', 'Developer', 90000, 2),
+('Durgesh Kumar', 'System Analyst', 85000, 2),
+('Esha Gupta', 'Accountant', 55000, 3);
+
+A5SetB3
+
+-- Create Doctor Table
+CREATE TABLE Doctor (
+    doc_no SERIAL PRIMARY KEY,
+    doc_name VARCHAR(50) NOT NULL,
+    experience INT NOT NULL,
+    city VARCHAR(50) NOT NULL,
+    area VARCHAR(50) NOT NULL
+);
+
+-- Create Hospital Table
+CREATE TABLE Hospital (
+    hosp_no SERIAL PRIMARY KEY,
+    hosp_name VARCHAR(50) NOT NULL,
+    hosp_city VARCHAR(50) NOT NULL
+);
+
+-- Create Doctor_Hospital Table (Junction Table)
+CREATE TABLE Doctor_Hospital (
+    doc_no INT REFERENCES Doctor(doc_no) ON DELETE CASCADE ON UPDATE CASCADE,
+    hosp_no INT REFERENCES Hospital(hosp_no) ON DELETE CASCADE ON UPDATE CASCADE,
+    type_of_appointment VARCHAR(20) CHECK (type_of_assignment IN ('Visiting', 'Working')),
+    PRIMARY KEY (doc_no, hosp_no)
+);
+
+-- Insert Sample Data
+INSERT INTO Doctor (doc_name, experience, city, area) VALUES
+('Dr. Asha', 3, 'Pune', 'Cardiology'),
+('Dr. Rahul', 8, 'Delhi', 'Neurology'),
+('Dr. Meera', 2, 'Bangalore', 'Orthopedics'),
+('Dr. Kunal', 5, 'Kolkata', 'Pediatrics');
+
+INSERT INTO Hospital (hosp_name, hosp_city) VALUES
+('City Hospital', 'Pune'),
+('Sunrise Clinic', 'Mumbai');
+
+INSERT INTO Doctor_Hospital (doc_no, hosp_no, type_of_appointment) VALUES
+(1, 1, 'visiting'),
+(2, 2, 'working'),
+(3, 2, 'visiting'),
+(4, 1, 'working');
+
+A5SetC1
+
+-- Create Agents Table
+CREATE TABLE Agents (
+    agent_id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    city VARCHAR(50) CHECK (city IN ('Pune', 'Mumbai', 'Chennai')),
+    experience INT CHECK (experience >= 0)
+);
+
+-- Create PolicyTypes Table
+CREATE TABLE PolicyTypes (
+    type_id SERIAL PRIMARY KEY,
+    type_name VARCHAR(50) CHECK (type_name IN ('accident', 'life', 'vehicle'))
+);
+
+-- Create Policies Table
+CREATE TABLE Policies (
+    policy_id SERIAL PRIMARY KEY,
+    agent_id INT REFERENCES Agents(agent_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    policy_type_id INT REFERENCES PolicyTypes(type_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    policy_amount DECIMAL CHECK (policy_amount > 20000),
+    policy_intro_date DATE,
+    policy_sale_date DATE CHECK (policy_sale_date > policy_intro_date)
+);
+
+-- Create Premiums Table
+CREATE TABLE Premiums (
+    premium_id SERIAL PRIMARY KEY,
+    policy_id INT REFERENCES Policies(policy_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    premium_amount DECIMAL,
+    payment_date DATE
+);
+
+-- Create Clients Table (assuming clients who have bought policies)
+CREATE TABLE Clients (
+    client_id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    policy_id INT REFERENCES Policies(policy_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- Inserting Sample Data into Agents Table
+INSERT INTO Agents (name, city, experience)
+VALUES
+    ('Amit Kumar', 'Pune', 5),
+    ('Priya Sharma', 'Mumbai', 3),
+    ('Rajesh Gupta', 'Chennai', 8),
+    ('Sanya Patel', 'Mumbai', 10),
+    ('Vikram Singh', 'Chennai', 4);
+
+-- Inserting Sample Data into PolicyTypes Table
+INSERT INTO PolicyTypes (type_name)
+VALUES
+    ('accident'),
+    ('life'),
+    ('vehicle');
+
+-- Inserting Sample Data into Policies Table
+INSERT INTO Policies (agent_id, policy_type_id, policy_amount, policy_intro_date, policy_sale_date)
+VALUES
+    (1, 1, 25000, '2022-01-15', '2022-02-01'),
+    (2, 2, 30000, '2022-03-10', '2022-04-01'),
+    (3, 3, 40000, '2022-06-01', '2022-07-10'),
+    (4, 1, 22000, '2022-09-01', '2022-10-15'),
+    (5, 2, 35000, '2023-01-05', '2023-02-20');
+
+-- Inserting Sample Data into Premiums Table
+INSERT INTO Premiums (policy_id, premium_amount, payment_date)
+VALUES
+    (1, 1500, '2022-02-01'),
+    (2, 2000, '2022-04-01'),
+    (3, 2500, '2022-07-10'),
+    (4, 1800, '2022-10-15'),
+    (5, 2200, '2023-02-20');
+
+-- Inserting Sample Data into Clients Table
+INSERT INTO Clients (name, policy_id)
+VALUES
+    ('Ravi Kumar', 1),
+    ('Nisha Verma', 2),
+    ('Sandeep Yadav', 3),
+    ('Anjali Desai', 4),
+    ('Harshit Joshi', 5);
