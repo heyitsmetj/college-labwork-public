@@ -1,0 +1,5 @@
+l1 = list("Ball","Dog","Cat","Apple")
+ascl1 = sort(unlist(l1))
+descl1 = sort(unlist(l1), decreasing = TRUE)
+print(ascl1)
+print(descl1)
