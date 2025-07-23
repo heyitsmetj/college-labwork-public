@@ -6,7 +6,7 @@
 struct input
 {
 	char pname[10];
-	int bt, at, tbt, ft;
+	int bt, at, tbt, ft, p;
 } tab[10];
 
 struct gantt
@@ -16,6 +16,22 @@ struct gantt
 } g[50], g1[20];
 
 int n, i, k = 0, ct = 0, prev = 0;
+
+int gethighpriority(int ct)
+{
+	int processpos, min = 99;
+
+	for ( i = 0; i < n; i++)
+	{
+		if(tab[i].at <= ct && tab[i].tbt != 0 && tab[i].p < min)
+		{
+			min = tab[i].p;
+			processpos = i;
+		}
+	}
+	
+	return processpos;
+}
 
 void getinput()
 {
@@ -30,20 +46,23 @@ void getinput()
 		printf("Arrival Time: ");
 		scanf("%d", &tab[i].at);
 
-		// printf("Burst Time: ");
-		// scanf("%d", &tab[i].bt);
-		tab[i].bt = rand() % 10;
+		printf("Burst Time: ");
+		scanf("%d", &tab[i].bt);
+		// tab[i].bt = rand() % 10;
 
-		tab[i].tbt = tab[i].bt; // Initialize tbt
+		printf("Priority: ");
+		scanf("%d", &tab[i].p);
+
+		tab[i].tbt = tab[i].bt;
 	}
 }
 
 void printinput()
 {
-	printf("\nPname\tAT\tBT");
+	printf("\nPname\tAT\tBT\tPriority");
 	for (i = 0; i < n; i++)
 	{
-		printf("\n%s\t%d\t%d", tab[i].pname, tab[i].at, tab[i].bt);
+		printf("\n%s\t%d\t%d\t%d", tab[i].pname, tab[i].at, tab[i].bt, tab[i].p);
 	}
 }
 
@@ -86,7 +105,9 @@ void processoutput()
 	{
 		if (arrived(ct))
 		{
-			for (int i = 0; i < n; i++)
+			i = gethighpriority(ct);
+
+			for (i = i; i < n; i++)
 			{
 				if (tab[i].at <= ct && tab[i].tbt > 0)
 				{
@@ -119,13 +140,13 @@ void printoutput()
 	float ATAT, AWT;
 
 	printf("\n\n******Final Table******");
-	printf("\nPname\tAT\tBT\tFT\tTAT\tWT");
+	printf("\nPname\tAT\tBT\tPriority\tFT\tTAT\tWT");
 
 	for (i = 0; i < n; i++)
 	{
 		int TAT = tab[i].ft - tab[i].at;
 		int WT = TAT - tab[i].bt;
-		printf("\n%s\t%d\t%d\t%d\t%d\t%d", tab[i].pname, tab[i].at, tab[i].bt, tab[i].ft, TAT, WT);
+		printf("\n%s\t%d\t%d\t%d\t%d\t%d\t%d", tab[i].pname, tab[i].at, tab[i].bt, tab[i].p, tab[i].ft, TAT, WT);
 		TTAT += TAT;
 		TWT += WT;
 	}

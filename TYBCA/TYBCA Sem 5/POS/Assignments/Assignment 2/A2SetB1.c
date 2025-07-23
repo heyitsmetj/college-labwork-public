@@ -17,6 +17,21 @@ struct gantt
 
 int n, i, k = 0, ct = 0, prev = 0;
 
+int getsmallburst(int ct)
+{
+	int min = 99, mini;
+
+	for (i = 0; i < n; i++)
+	{
+		if (tab[i].tbt < min && tab[i].at <= ct && tab[i].tbt != 0)
+		{
+			min = tab[i].bt;
+			mini = i;
+		}
+	}
+	return mini;
+}
+
 void getinput()
 {
 	printf("\nEnter No. of Processes: ");
@@ -30,11 +45,11 @@ void getinput()
 		printf("Arrival Time: ");
 		scanf("%d", &tab[i].at);
 
-		// printf("Burst Time: ");
-		// scanf("%d", &tab[i].bt);
-		tab[i].bt = rand() % 10;
+		printf("Burst Time: ");
+		scanf("%d", &tab[i].bt);
+		// tab[i].bt = rand() % 10;
 
-		tab[i].tbt = tab[i].bt; // Initialize tbt
+		tab[i].tbt = tab[i].bt;
 	}
 }
 
@@ -81,34 +96,40 @@ int arrived(int ct)
 void processoutput()
 {
 	int finish = 0;
+	int current = -1;
 
 	while (finish != n)
 	{
 		if (arrived(ct))
 		{
-			for (int i = 0; i < n; i++)
+			i = getsmallburst(ct);
+
+			if (current != i)
 			{
-				if (tab[i].at <= ct && tab[i].tbt > 0)
-				{
-					g[k].start = ct;
-					ct += tab[i].bt;
-					g[k].end = ct;
-					prev = ct;
-					strcpy(g[k++].pname, tab[i].pname);
-					tab[i].ft = ct;
-					tab[i].tbt = 0;
-					finish++;
-					break;
-				}
+				g[k].start = ct;
+				strcpy(g[k++].pname, tab[i].pname);
+				current = i;
 			}
+
+			tab[i].tbt--;
+			ct++;
+
+			if (tab[i].tbt == 0)
+			{
+				tab[i].ft = ct;
+				finish++;
+			}
+
+			g[k - 1].end = ct;
 		}
 		else
 		{
 			ct++;
 			g[k].start = prev;
 			g[k].end = ct;
-			prev = ct;
 			strcpy(g[k++].pname, "idle");
+			prev = ct;
+			current = -1;
 		}
 	}
 }

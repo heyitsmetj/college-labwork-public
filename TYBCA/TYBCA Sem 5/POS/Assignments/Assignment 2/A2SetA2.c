@@ -17,6 +17,21 @@ struct gantt
 
 int n, i, k = 0, ct = 0, prev = 0;
 
+int getsmallburst(int ct)
+{
+	int min = 99, mini;
+
+	for ( i = 0; i < n; i++)
+	{
+		if (tab[i].tbt < min && tab[i].at <= ct && tab[i].tbt != 0)
+		{
+			min = tab[i].bt;
+			mini = i;
+		}
+	}
+	return mini;
+}
+
 void getinput()
 {
 	printf("\nEnter No. of Processes: ");
@@ -30,11 +45,11 @@ void getinput()
 		printf("Arrival Time: ");
 		scanf("%d", &tab[i].at);
 
-		// printf("Burst Time: ");
-		// scanf("%d", &tab[i].bt);
-		tab[i].bt = rand() % 10;
+		printf("Burst Time: ");
+		scanf("%d", &tab[i].bt);
+		//tab[i].bt = rand() % 10;
 
-		tab[i].tbt = tab[i].bt; // Initialize tbt
+		tab[i].tbt = tab[i].bt;
 	}
 }
 
@@ -86,7 +101,9 @@ void processoutput()
 	{
 		if (arrived(ct))
 		{
-			for (int i = 0; i < n; i++)
+			i = getsmallburst(ct);
+
+			for (int x = 0; x < n; x++)
 			{
 				if (tab[i].at <= ct && tab[i].tbt > 0)
 				{
