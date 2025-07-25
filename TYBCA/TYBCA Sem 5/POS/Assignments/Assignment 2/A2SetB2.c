@@ -48,7 +48,6 @@ void getinput()
 
 		printf("Burst Time: ");
 		scanf("%d", &tab[i].bt);
-		// tab[i].bt = rand() % 10;
 
 		printf("Priority: ");
 		scanf("%d", &tab[i].p);
@@ -200,6 +199,18 @@ int main()
 
 	printf("\n\nData after sorting:");
 	printinput();
+
+	processoutput();
+	printoutput();
+	printganttchart();
+
+	printf("\n\nRandomized Inputs:\n\n");
+
+	for ( i = 0; i < n; i++)
+	{	
+		tab[i].tbt = tab[i].bt = rand() % 10+1; 
+		tab[i].at = tab[i].ft+2;
+	}
 
 	processoutput();
 	printoutput();

@@ -30,11 +30,10 @@ void getinput()
 		printf("Arrival Time: ");
 		scanf("%d", &tab[i].at);
 
-		// printf("Burst Time: ");
-		// scanf("%d", &tab[i].bt);
-		tab[i].bt = rand() % 10;
+		printf("Burst Time: ");
+		scanf("%d", &tab[i].bt);
 
-		tab[i].tbt = tab[i].bt; // Initialize tbt
+		tab[i].tbt = tab[i].bt;
 	}
 }
 
@@ -184,5 +183,17 @@ int main()
 	printoutput();
 	printganttchart();
 
+	printf("\n\nRandomized Inputs:\n\n");
+	
+	for ( i = 0; i < n; i++)
+	{	
+		tab[i].tbt = tab[i].bt = rand() % 10+1; 
+		tab[i].at = tab[i].ft+2;
+	}
+
+	processoutput();
+	printoutput();
+	printganttchart();
+	
 	return 0;
 }
