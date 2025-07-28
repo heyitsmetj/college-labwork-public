@@ -28,4 +28,4 @@ print("\nTesting Input (x_test):\n", x_test)
 
 print("\nTraning Output (y_train):\n", y_train)
 
-print("\nTraning Onput (y_train):\n", y_test)
+print("\nTraning Output (y_train):\n", y_test)

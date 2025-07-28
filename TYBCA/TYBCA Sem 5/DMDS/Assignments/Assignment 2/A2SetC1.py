@@ -31,7 +31,7 @@ print("\nMissing values data after modification:\n", missing_dataset_sum_after_m
 
 clean_data_dataset = dataset.dropna()
 print("\nShow dataset without missing values:\n", clean_data_dataset)
-
+ 
 print("\n\nConverting the Categorical Values into Numeric Format: \n\n")
 
 x = dataset.iloc[:, :-1].values
@@ -67,18 +67,18 @@ print ("_" * 50)
 
 x = dataset.iloc[:, :1].values
 y = dataset.iloc[: , -1].values
-print("Input feactures (x):\n" , x)
+print("Input features (x):\n" , x)
 print("Target Output (y):\n" , y)
 
 from sklearn.model_selection import train_test_split
 
 x_train, x_test, y_train, y_test= train_test_split(x, y, test_size=0.2, random_state=0)
 
-print("\nTraning Input (x_train):\n", x_train)
+print("\nTraining Input (x_train):\n", x_train)
 
 print("\nTesting Input (x_test):\n", x_test)
 
-print("\nTraning Output (y_train):\n", y_train)
+print("\nTraining Output (y_train):\n", y_train)
 
-print("\nTraning Onput (y_train):\n", y_test)
+print("\nTesting Output (y_test):\n", y_test)
 
