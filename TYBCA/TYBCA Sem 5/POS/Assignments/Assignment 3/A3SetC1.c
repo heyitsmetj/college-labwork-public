@@ -19,11 +19,11 @@ int n, i, k = 0, ct = 0, prev = 0;
 
 int gethighpriority(int ct)
 {
-	int min = 99, processpos;
+	int min = -1, processpos;
 
 	for ( i = 0; i < n; i++)
 	{
-		if (tab[i].at <= ct && tab[i].tbt != 0 && tab[i].p < min)
+		if (tab[i].at <= ct && tab[i].tbt != 0 && tab[i].p > min)
 		{
 			min = tab[i].p;
 			processpos = i;
@@ -47,7 +47,7 @@ void getinput()
 
 		printf("Burst Time: ");
 		scanf("%d", &tab[i].bt);
-		
+
 		printf("Priority: ");
 		scanf("%d", &tab[i].p);
 
@@ -98,6 +98,7 @@ int arrived(int ct)
 void processoutput()
 {
 	int finish = 0;
+	int current = -1;
 
 	while (finish != n)
 	{
@@ -105,29 +106,32 @@ void processoutput()
 		{
 			i = gethighpriority(ct);
 
-			for (int x = 0; x < n; x++)
+			if (current != i)
 			{
-				if (tab[i].at <= ct && tab[i].tbt > 0)
-				{
-					g[k].start = ct;
-					ct += tab[i].bt;
-					g[k].end = ct;
-					prev = ct;
-					strcpy(g[k++].pname, tab[i].pname);
-					tab[i].ft = ct;
-					tab[i].tbt = 0;
-					finish++;
-					break;
-				}
+				g[k].start = ct;
+				strcpy(g[k++].pname, tab[i].pname);
+				current = i;
 			}
+
+			tab[i].tbt--;
+			ct++;
+
+			if (tab[i].tbt == 0)
+			{
+				tab[i].ft = ct;
+				finish++;
+			}
+
+			g[k - 1].end = ct;
 		}
 		else
 		{
 			ct++;
 			g[k].start = prev;
 			g[k].end = ct;
-			prev = ct;
 			strcpy(g[k++].pname, "idle");
+			prev = ct;
+			current = -1;
 		}
 	}
 }

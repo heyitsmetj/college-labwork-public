@@ -6,7 +6,7 @@
 struct input
 {
 	char pname[10];
-	int bt, at, tbt, ft, p;
+	int bt, at, tbt, ft;
 } tab[10];
 
 struct gantt
@@ -15,21 +15,21 @@ struct gantt
 	char pname[10];
 } g[50], g1[20];
 
-int n, i, k = 0, ct = 0, prev = 0;
+int n, i, k = 0, ct = 0, prev = 0, tq;
 
-int gethighpriority(int ct)
+int getsmallburst(int ct)
 {
-	int min = 99, processpos;
+	int min = 99, mini;
 
-	for ( i = 0; i < n; i++)
+	for (i = 0; i < n; i++)
 	{
-		if (tab[i].at <= ct && tab[i].tbt != 0 && tab[i].p < min)
+		if (tab[i].tbt < min && tab[i].at <= ct && tab[i].tbt != 0)
 		{
-			min = tab[i].p;
-			processpos = i;
+			min = tab[i].bt;
+			mini = i;
 		}
 	}
-	return processpos;
+	return mini;
 }
 
 void getinput()
@@ -47,9 +47,6 @@ void getinput()
 
 		printf("Burst Time: ");
 		scanf("%d", &tab[i].bt);
-		
-		printf("Priority: ");
-		scanf("%d", &tab[i].p);
 
 		tab[i].tbt = tab[i].bt;
 	}
@@ -98,36 +95,40 @@ int arrived(int ct)
 void processoutput()
 {
 	int finish = 0;
+	int current = -1;
 
 	while (finish != n)
 	{
 		if (arrived(ct))
 		{
-			i = gethighpriority(ct);
+			i = getsmallburst(ct);
 
-			for (int x = 0; x < n; x++)
+			if (current != i)
 			{
-				if (tab[i].at <= ct && tab[i].tbt > 0)
-				{
-					g[k].start = ct;
-					ct += tab[i].bt;
-					g[k].end = ct;
-					prev = ct;
-					strcpy(g[k++].pname, tab[i].pname);
-					tab[i].ft = ct;
-					tab[i].tbt = 0;
-					finish++;
-					break;
-				}
+				g[k].start = ct;
+				strcpy(g[k++].pname, tab[i].pname);
+				current = i;
 			}
+
+			tab[i].tbt--;
+			ct++;
+
+			if (tab[i].tbt == 0)
+			{
+				tab[i].ft = ct;
+				finish++;
+			}
+
+			g[k - 1].end = ct;
 		}
 		else
 		{
 			ct++;
 			g[k].start = prev;
 			g[k].end = ct;
-			prev = ct;
 			strcpy(g[k++].pname, "idle");
+			prev = ct;
+			current = -1;
 		}
 	}
 }
