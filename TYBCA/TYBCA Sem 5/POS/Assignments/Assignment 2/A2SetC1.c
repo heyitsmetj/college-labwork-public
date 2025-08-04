@@ -6,7 +6,7 @@
 struct input
 {
 	char pname[10];
-	int bt, at, tbt, ft;
+	int bt, at, tbt, ft, p;
 } tab[10];
 
 struct gantt
@@ -16,6 +16,21 @@ struct gantt
 } g[50], g1[20];
 
 int n, i, k = 0, ct = 0, prev = 0;
+
+int gethighpriority(int ct)
+{
+	int min = -1, processpos;
+
+	for ( i = 0; i < n; i++)
+	{
+		if (tab[i].at <= ct && tab[i].tbt != 0 && tab[i].p > min)
+		{
+			min = tab[i].p;
+			processpos = i;
+		}
+	}
+	return processpos;
+}
 
 void getinput()
 {
@@ -32,6 +47,9 @@ void getinput()
 
 		printf("Burst Time: ");
 		scanf("%d", &tab[i].bt);
+
+		printf("Priority: ");
+		scanf("%d", &tab[i].p);
 
 		tab[i].tbt = tab[i].bt;
 	}
@@ -79,36 +97,41 @@ int arrived(int ct)
 
 void processoutput()
 {
-	int j, finish = 0;
+	int finish = 0;
+	int current = -1;
 
 	while (finish != n)
 	{
 		if (arrived(ct))
 		{
-			for (j = 0; j < tab[i].bt; j++)
+			i = gethighpriority(ct);
+
+			if (current != i)
 			{
-				ct++;
-				tab[i].tbt--;
-				g[k].start = prev;
-				g[k].end = ct;
-				prev = ct;
-				tab[i].ft = ct;
+				g[k].start = ct;
 				strcpy(g[k++].pname, tab[i].pname);
-					
-				if(tab[i].tbt == 0)
-				{
-					finish++;
-					break;
-				}
+				current = i;
 			}
+
+			tab[i].tbt--;
+			ct++;
+
+			if (tab[i].tbt == 0)
+			{
+				tab[i].ft = ct;
+				finish++;
+			}
+
+			g[k - 1].end = ct;
 		}
 		else
 		{
 			ct++;
 			g[k].start = prev;
 			g[k].end = ct;
-			prev = ct;
 			strcpy(g[k++].pname, "idle");
+			prev = ct;
+			current = -1;
 		}
 	}
 }
@@ -185,7 +208,7 @@ int main()
 	printganttchart();
 
 	printf("\n\nRandomized Inputs:\n\n");
-	
+
 	for ( i = 0; i < n; i++)
 	{	
 		tab[i].tbt = tab[i].bt = rand() % 10+1; 
@@ -195,7 +218,6 @@ int main()
 	processoutput();
 	printoutput();
 	printganttchart();
-	
+
 	return 0;
 }
-

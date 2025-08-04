@@ -15,7 +15,7 @@ struct gantt
 	char pname[10];
 } g[50], g1[20];
 
-int n, i, k = 0, ct = 0, prev = 0;
+int n, i, k = 0, ct = 0, prev = 0, tq;
 
 void getinput()
 {
@@ -35,6 +35,10 @@ void getinput()
 
 		tab[i].tbt = tab[i].bt;
 	}
+	
+	printf("\nEnter Time Quantum: ");
+	scanf("%d", &tq);
+	
 }
 
 void printinput()
@@ -79,28 +83,35 @@ int arrived(int ct)
 
 void processoutput()
 {
-	int j, finish = 0;
+	int j, finish = 0, i = 0;
 
 	while (finish != n)
 	{
 		if (arrived(ct))
 		{
-			for (j = 0; j < tab[i].bt; j++)
+			for (j = 0; j < tq; j++)
 			{
-				ct++;
-				tab[i].tbt--;
-				g[k].start = prev;
-				g[k].end = ct;
-				prev = ct;
-				tab[i].ft = ct;
-				strcpy(g[k++].pname, tab[i].pname);
-					
-				if(tab[i].tbt == 0)
+				if(tab[i].tbt != 0)
 				{
-					finish++;
-					break;
+					ct++;
+					tab[i].tbt--;
+					g[k].start = prev;
+					g[k].end = ct;
+					prev = ct;
+					tab[i].ft = ct;
+					strcpy(g[k++].pname, tab[i].pname);
+						
+					if(tab[i].tbt == 0)
+					{
+						finish++;
+						break;
+					}
 				}
 			}
+			if(ct < tab[(i+1)%n].at)
+				i = 0;
+			else
+				i = (i+1) % n;
 		}
 		else
 		{

@@ -1,6 +1,7 @@
 #include<stdio.h>
+#include<stdlib.h>
 
-int nop, nor, A[10][10], M[10][10], AV[10], N[10][10], finish[10];
+int i, nop, nor, A[10][10], M[10][10], AV[10], N[10][10], finish[10];
 
 void acceptdata(int x[10][10])
 {
@@ -45,8 +46,8 @@ void displaydata()
 {
 	int i, j;
 	
-	printf("\n\tAllocation\t\tMAX\t\tNeed\n\t");
-	for(i = 0; i < 3; i++)
+	printf("\n\t\tAllocation\t\tMAX\n\t");
+	for(i = 0; i < 2; i++)
 	{
 		for(j=0;j<nor;j++)
 		{
@@ -64,81 +65,41 @@ void displaydata()
 		printf("\t");
 		for(j=0; j<nor; j++)
 			printf("%4d", M[i][j]);
-		printf("\t");
-		for(j=0; j<nor; j++)
-			printf("%4d", N[i][j]);
 	}
-	printf("\nAvailable");
+}
+
+void displayavail()
+{
+	printf("\nAvailable: ");
 	for(i=0;i<nor;i++)
 		printf("%4d", AV[i]);
+		
+	printf("\n");
 }
 
-int checkneed(int pno)
+void displayneed()
 {
-	int i;
-	for(i = 0; i<nor; i++)
-		if(N[pno][i]>AV[i])
-			return 0;
-	return 1;
-}
-
-void banker()
-{
-	int p=0, j=0, k=0, flag=0, safe[10];
-	while(flag<2)
+	int i, j;
+	
+	printf("\nNeed Matrix: \n\t");
+	for(j=0;j<nor;j++)
 	{
-		if(!finish[p])
-		{
-			printf("\n\nNeed of process P%d(,",p);
-			for(j=0;j<nor;j++)
-				printf("%d,", N[p][j]);
-			if(checkneed(p))
-			{
-				printf(") <= Available(");
-				for(j=0;j<nor;j++)
-					printf("%d,",AV[j]);
-				printf(")");
-				
-				printf("\nNeed is Satisfied, So process P%d can be granted required resources.\nAfter P%d finishes, it will release all the resources.", p, p);
-				
-				for(j=0;j<nor;j++)
-					AV[j] = AV[j] + A[p][j];
-					
-				printf("New Available = ");
-				for(j=0;j<nor;j++)
-					printf("%d ",AV[j]);
-				finish[p] = 1;
-				safe[k++] = p;
-			}
-			else
-			{
-				printf(") > Available (");
-				for(j = 0;j<nor;j++)
-					printf("%d,", AV[j]);
-				printf(")");
-				
-				printf("\nNeed is not satisfied, So process P%d cannot be granted required resources.\nProcess P%d has to wait.", p, p);
-			}
-		}
-		if((p+1)%nop == 0)
-			flag++;
-		p = (p+1)%nop;
+		printf("%4c", 65+j);
+		printf("\t");
 	}
 	
-	if(k == nop)
+	for(i=0; i<nop; i++)
 	{
-		printf("\nSystem is in Safe state...");
-		printf("\nSafe Sequence: ");
-		for(j=0;j<k;j++)
-			printf("P%d->", safe[j]);	
-	}
-	else{
-		printf("\nSystem is NOT in Safe state...");
+		printf("\nP%d\t", i);
+		for(j=0; j<nor; j++)
+			printf("%d\t", N[i][j]);
 	}
 }
 
 int main()
 {
+	int ch;
+	
 	printf("\nEnter No. of Processes: ");
 	scanf("%d", &nop);
 	
@@ -151,18 +112,34 @@ int main()
 	printf("\nEnter Max Matrix: ");
 	acceptdata(M);
 	
-	while(true)
+	while(1)
 	{
-		printf("\n1.Accept Available.\n2.Display Allocation, Max.\n3.Find Need and Display It.\n4.Display Available.");
+		printf("\n1.Accept Available.\n2.Display Allocation, Max.\n3.Find Need and Display It.\n4.Display Available.\n5.Exit.");
 		printf("\nEnter choice:");
+		scanf("%d", &ch);
 		switch(ch)
 		{	
 			case 1:
 				printf("\nEnter Availability: ");
-			acceptav();
-			calcneed();
-			displaydata();
-			banker();
+				acceptav();
+				break;
+			
+			case 2:
+				calcneed();
+				displaydata();
+				break;
+				
+			case 3:
+				calcneed();
+				displayneed();
+				break;
+			
+			case 4:
+				displayavail();
+				break;
+				
+			case 5:
+				exit(0);
 		}
 	}
 	return 0;

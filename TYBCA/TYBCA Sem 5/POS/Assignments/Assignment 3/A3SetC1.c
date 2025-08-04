@@ -1,223 +1,162 @@
-#include <stdio.h>
-#include <time.h>
-#include <stdlib.h>
-#include <string.h>
+#include<stdio.h>
 
-struct input
+int nop, nor, A[10][10], M[10][10], AV[10], N[10][10], finish[10];
+
+void acceptdata(int x[10][10])
 {
-	char pname[10];
-	int bt, at, tbt, ft, p;
-} tab[10];
-
-struct gantt
-{
-	int start, end;
-	char pname[10];
-} g[50], g1[20];
-
-int n, i, k = 0, ct = 0, prev = 0;
-
-int gethighpriority(int ct)
-{
-	int min = -1, processpos;
-
-	for ( i = 0; i < n; i++)
+	int i, j;
+	
+	for(i = 0; i< nop; i++)
 	{
-		if (tab[i].at <= ct && tab[i].tbt != 0 && tab[i].p > min)
+		printf("\nP%d\n",i);
+		
+		for(j = 0; j < nor; j++)
 		{
-			min = tab[i].p;
-			processpos = i;
+			printf("%c: ", 65+j);
+			scanf("%d", &x[i][j]);
 		}
 	}
-	return processpos;
 }
 
-void getinput()
+void acceptav()
 {
-	printf("\nEnter No. of Processes: ");
-	scanf("%d", &n);
-
-	for (i = 0; i < n; i++)
+	int i;
+	for(i=0; i<nor; i++)
 	{
-		printf("\nProcess Name: ");
-		scanf("%s", tab[i].pname);
-
-		printf("Arrival Time: ");
-		scanf("%d", &tab[i].at);
-
-		printf("Burst Time: ");
-		scanf("%d", &tab[i].bt);
-
-		printf("Priority: ");
-		scanf("%d", &tab[i].p);
-
-		tab[i].tbt = tab[i].bt;
+		printf("%c: ", 65+i);
+		scanf("%d", &AV[i]);
 	}
 }
 
-void printinput()
+void calcneed()
 {
-	printf("\nPname\tAT\tBT");
-	for (i = 0; i < n; i++)
+	int i, j;
+	
+	for(i = 0; i<nop; i++)
 	{
-		printf("\n%s\t%d\t%d", tab[i].pname, tab[i].at, tab[i].bt);
-	}
-}
-
-void sort()
-{
-	int j;
-	struct input temp;
-
-	for (i = 1; i < n; i++)
-	{
-		for (j = 0; j < n - 1; j++)
+		for(j = 0; j < nor; j++)
 		{
-			if (tab[j].at > tab[j + 1].at)
+			N[i][j] = M[i][j] - A[i][j];
+		}
+	}
+}
+
+void displaydata()
+{
+	int i, j;
+	
+	printf("\n\tAllocation\t\tMAX\t\tNeed\n\t");
+	for(i = 0; i < 3; i++)
+	{
+		for(j=0;j<nor;j++)
+		{
+			printf("%4c", 65+j);
+		}
+		
+		printf("\t");
+	}
+	
+	for(i=0; i<nop; i++)
+	{
+		printf("\nP%d\t", i);
+		for(j=0; j<nor; j++)
+			printf("%4d", A[i][j]);
+		printf("\t");
+		for(j=0; j<nor; j++)
+			printf("%4d", M[i][j]);
+		printf("\t");
+		for(j=0; j<nor; j++)
+			printf("%4d", N[i][j]);
+	}
+	printf("\nAvailable");
+	for(i=0;i<nor;i++)
+		printf("%4d", AV[i]);
+}
+
+int checkneed(int pno)
+{
+	int i;
+	for(i = 0; i<nor; i++)
+		if(N[pno][i]>AV[i])
+			return 0;
+	return 1;
+}
+
+void banker()
+{
+	int p=0, j=0, k=0, flag=0, safe[10];
+	while(flag<2)
+	{
+		if(!finish[p])
+		{
+			printf("\n\nNeed of process P%d(,",p);
+			for(j=0;j<nor;j++)
+				printf("%d,", N[p][j]);
+			if(checkneed(p))
 			{
-				temp = tab[j];
-				tab[j] = tab[j + 1];
-				tab[j + 1] = temp;
+				printf(") <= Available(");
+				for(j=0;j<nor;j++)
+					printf("%d,",AV[j]);
+				printf(")");
+				
+				printf("\nNeed is Satisfied, So process P%d can be granted required resources.\nAfter P%d finishes, it will release all the resources.", p, p);
+				
+				for(j=0;j<nor;j++)
+					AV[j] = AV[j] + A[p][j];
+					
+				printf("New Available = ");
+				for(j=0;j<nor;j++)
+					printf("%d ",AV[j]);
+				finish[p] = 1;
+				safe[k++] = p;
+			}
+			else
+			{
+				printf(") > Available (");
+				for(j = 0;j<nor;j++)
+					printf("%d,", AV[j]);
+				printf(")");
+				
+				printf("\nNeed is not satisfied, So process P%d cannot be granted required resources.\nProcess P%d has to wait.", p, p);
 			}
 		}
+		if((p+1)%nop == 0)
+			flag++;
+		p = (p+1)%nop;
 	}
-}
-
-int arrived(int ct)
-{
-	for (i = 0; i < n; i++)
+	
+	if(k == nop)
 	{
-		if (tab[i].at <= ct && tab[i].tbt != 0)
-		{
-			return 1;
-		}
+		printf("\nSystem is in Safe state...");
+		printf("\nSafe Sequence: ");
+		for(j=0;j<k;j++)
+			printf("P%d->", safe[j]);	
 	}
-	return 0;
-}
-
-void processoutput()
-{
-	int finish = 0;
-	int current = -1;
-
-	while (finish != n)
-	{
-		if (arrived(ct))
-		{
-			i = gethighpriority(ct);
-
-			if (current != i)
-			{
-				g[k].start = ct;
-				strcpy(g[k++].pname, tab[i].pname);
-				current = i;
-			}
-
-			tab[i].tbt--;
-			ct++;
-
-			if (tab[i].tbt == 0)
-			{
-				tab[i].ft = ct;
-				finish++;
-			}
-
-			g[k - 1].end = ct;
-		}
-		else
-		{
-			ct++;
-			g[k].start = prev;
-			g[k].end = ct;
-			strcpy(g[k++].pname, "idle");
-			prev = ct;
-			current = -1;
-		}
-	}
-}
-
-void printoutput()
-{
-	int TTAT = 0, TWT = 0;
-	float ATAT, AWT;
-
-	printf("\n\n******Final Table******");
-	printf("\nPname\tAT\tBT\tFT\tTAT\tWT");
-
-	for (i = 0; i < n; i++)
-	{
-		int TAT = tab[i].ft - tab[i].at;
-		int WT = TAT - tab[i].bt;
-		printf("\n%s\t%d\t%d\t%d\t%d\t%d", tab[i].pname, tab[i].at, tab[i].bt, tab[i].ft, TAT, WT);
-		TTAT += TAT;
-		TWT += WT;
-	}
-
-	ATAT = (float)TTAT / n;
-	AWT = (float)TWT / n;
-
-	printf("\nTotal TAT = %d\nTotal WT = %d\nAverage TAT = %.2f\nAverage WT = %.2f", TTAT, TWT, ATAT, AWT);
-}
-
-void printganttchart()
-{
-	int j = 0;
-	g1[0] = g[0];
-
-	for (i = 1; i < k; i++)
-	{
-		if (strcmp(g1[j].pname, g[i].pname) == 0)
-		{
-			g1[j].end = g[i].end;
-		}
-		else
-		{
-			j++;
-			g1[j] = g[i];
-		}
-	}
-
-	printf("\n\n******Each Unit Gantt Chart******");
-	for (i = 0; i < k; i++)
-	{
-		printf("\n%d\t%s\t%d", g[i].start, g[i].pname, g[i].end);
-	}
-
-	printf("\n\n******Final Gantt Chart******");
-	for (i = 0; i <= j; i++)
-	{
-		printf("\n%d\t%s\t%d", g1[i].start, g1[i].pname, g1[i].end);
+	else{
+		printf("\nSystem is NOT in Safe state...");
 	}
 }
 
 int main()
 {
-	srand(time(0));
-	getinput();
-
-	printf("\n\nEntered data is:");
-	printinput();
-
-	sort();
-
-	printf("\n\nData after sorting:");
-	printinput();
-
-	processoutput();
-	printoutput();
-	printganttchart();
-
-	printf("\n\nRandomized Inputs:\n\n");
-
-	for ( i = 0; i < n; i++)
-	{	
-		tab[i].tbt = tab[i].bt = rand() % 10+1; 
-		tab[i].at = tab[i].ft+2;
-	}
-
-	processoutput();
-	printoutput();
-	printganttchart();
-
+	printf("\nEnter No. of Processes: ");
+	scanf("%d", &nop);
+	
+	printf("\nEnter No. of Resources: ");
+	scanf("%d", &nor);
+	
+	printf("\nEnter Allocation Matrix: ");
+	acceptdata(A);
+	
+	printf("\nEnter Max Matrix: ");
+	acceptdata(M);
+	
+	printf("\nEnter Availability: ");
+	acceptav();
+	calcneed();
+	displaydata();
+	banker();
+	
 	return 0;
 }
+
