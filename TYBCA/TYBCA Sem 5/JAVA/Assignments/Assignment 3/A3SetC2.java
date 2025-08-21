@@ -50,49 +50,76 @@ class A3SetC2
 		boolean isLeapYear = false;
 		
 		int year = date.getYear();
-		
-		if(year % 4 == 0)
-		{
-			if(year % 100 == 0)
-			{
-				if(year % 400 == 0)
-				{
-					isLeapYear = true;
-				}
-				else
-				{
-					isLeapYear = false;
-				}
-			}
-			else
-			{
-				isLeapYear = true;
-			}
-		}
-		else
-		{
-			isLeapYear = false;
-		}
-		
-		if(date.getDate() > 31 || date.getMonth() > 12)
-			invalid = true;
-		
-		if(date.getDate() > 28 && date.getMonth() == 2 && isLeapYear == false)
-			invalid = true;
-			
-		if(date.getMonth() % 2 == 0 && date.getDate() > 30 && date.getMonth() != 2)
-			invalid = true;
-			
-		if(invalid)
-		{
-			throw new InvalidDateException("Exception Raised: Invalid Date Format!");
-		}
-		else
-		{
-			date.display();
-		}		
-	}
 	
+		if (year % 4 == 0) 
+		{
+		    if (year % 100 == 0) 
+		    {
+		        if (year % 400 == 0) 
+		        {
+		            isLeapYear = true;
+		        } 
+		        else 
+		        {
+		            isLeapYear = false;
+		        }
+		    } 
+		    else 
+		    {
+		        isLeapYear = true;
+		    }
+		} 
+		else 
+		{
+		    isLeapYear = false;
+		}
+		
+		int d = date.getDate();
+		int m = date.getMonth();
+		
+		if (m < 1 || m > 12) 
+		{
+		    invalid = true;
+		} 
+		else 
+		{
+		    switch(m) 
+		    {
+		        case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+		            if (d < 1 || d > 31) 
+		            	invalid = true;
+		            break;
+		            
+		        case 4: case 6: case 9: case 11:
+		            if (d < 1 || d > 30) 
+		            	invalid = true;
+		            break;
+		        
+		        case 2:
+		            if (isLeapYear) 
+		            {
+		                if (d < 1 || d > 29) 
+		                	invalid = true;
+		            } 
+		            else 
+		            {
+		                if (d < 1 || d > 28) 
+		                	invalid = true;
+		            }
+		            break;
+		    }
+		}
+		
+		if (invalid) 
+		{
+		    throw new InvalidDateException("Exception Raised: Invalid Date Format!");
+		} 
+		else 
+		{
+		    date.display();
+		}
+	}
+
 	public static void main(String args[])
 	{
 		Scanner sc = new Scanner(System.in);
