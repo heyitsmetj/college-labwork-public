@@ -10,8 +10,8 @@ import numpy as np
 import pandas as pd
 #import matplotlib.pyplot as plt
 dataset=pd.read_csv("Social_Network_Ads.csv")
-x= dataset.iloc[:,[2,3]].values  # Contains the feature variables, which are the columns at indices 2 and 3
-y= dataset.iloc[:,4].values  # Contains the target variable, which is the column at index 4
+x= dataset.iloc[:,[0,1]].values  # Contains the feature variables, which are the columns at indices 2 and 3
+y= dataset.iloc[:,2].values  # Contains the target variable, which is the column at index 4
 
 # Splitting the Dataset into Training and Test Sets
 from sklearn.model_selection import train_test_split
