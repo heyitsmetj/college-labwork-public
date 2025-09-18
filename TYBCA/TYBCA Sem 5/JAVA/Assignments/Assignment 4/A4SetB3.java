@@ -13,6 +13,7 @@ public class A4SetB3
 
         
         JTextField display = new JTextField();
+        display.setBorder(BorderFactory.createCompoundBorder(display.getBorder(), BorderFactory.createEmptyBorder(10, 10, 10, 10)));
         display.setHorizontalAlignment(JTextField.RIGHT);
         frame.add(display, BorderLayout.NORTH);
 
