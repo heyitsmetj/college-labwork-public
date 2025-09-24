@@ -1,58 +1,33 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Sep 22 15:57:02 2025
+import pandas as pd
+from apyori import apriori
 
-@author: mitacsc
-"""
-from ucimlrepo import fetch_ucirepo 
-  
-# fetch dataset 
-iris = fetch_ucirepo(id=53) 
+# Load the data
+data = pd.read_csv("iris.csv", header=None)
 
-# Load the dataset (assuming IRIS.csv is in the same directory or provide the correct path)
-df = pd.read_csv(iris)
+# Discretize the first 4 numeric columns
+data_binned = data.copy()
+for col in range(4):
+    data_binned[col] = pd.cut(data[col], bins=3, labels=['low', 'medium', 'high'])
 
-# Check the dataset
-print(df.head()) # Print first few rows for verification
-
-# Discretize numerical features into categorical features using pd.cut
-df['sepal_length'] = pd.cut(df['sepal_length'], bins=3, labels=["short", "medium", "long"])
-df['sepal_width'] = pd.cut(df['sepal_width'], bins=3, labels=["narrow", "medium", "wide"])
-df['petal_length'] = pd.cut(df['petal_length'], bins=3, labels=["short", "medium", "long"])
-df['petal_width'] = pd.cut(df['petal_width'], bins=3, labels=["narrow", "medium", "wide"])
-
-# Now each feature is categorical (binned), and we can prepare the dataset for Apriori
+# Convert each row into a list (transaction)
 records = []
-for i in range(0, len(df)):
-    records.append([str(df.values[i, j]) for j in range(0, len(df.columns))])
+for i in range(len(data_binned)):
+    records.append([str(x) for x in data_binned.iloc[i]])
 
-# Apply the Apriori algorithm
-rules = apriori(records, min_support=0.1, min_confidence=0.5, min_lift=1.5, min_length=2)
+# Run Apriori
+association_rules = apriori(records, min_support=0.04, min_confidence=0.3, min_lift=1.2, min_length=2)
+association_result = list(association_rules)
 
-# Convert the rules into a list
-rules_list = list(rules)
+print(f"Total rules found: {len(association_result)}\n")
 
-# Prepare to store results in a human-readable format
-results_list = []
+# Print the rules
+for item in association_result:
+    for rule in item.ordered_statistics:
+        lhs = ', '.join(rule.items_base) if rule.items_base else "None"
+        rhs = ', '.join(rule.items_add) if rule.items_add else "None"
+        print(f"Rule: {lhs} -> {rhs}")
+        print(f"Support: {item.support:.4f}")
+        print(f"Confidence: {rule.confidence:.4f}")
+        print(f"Lift: {rule.lift:.4f}")
+        print("----------------------------------------")
 
-# Extracting the rules along with their support, confidence, and lift
-for rule in rules_list:
-    support = rule.support
-    for ordered_stat in rule.ordered_statistics:
-        base_items = ', '.join(list(ordered_stat.items_base))
-        add_items = ', '.join(list(ordered_stat.items_add))
-        confidence = ordered_stat.confidence
-        lift = ordered_stat.lift
-    
-    # Store the rule in a readable format
-    results_list.append(f"Rule: ({base_items}) -> ({add_items}) \nSupport: {support} \nConfidence: {confidence} \n Lift: {lift}\n")
-
-# Display number of rules found
-print(f"Number of rules found: {len(results_list)}\n")
-
-# Display the first rule (for testing, you can print more if needed)
-if len(results_list) > 0:
-    print(f"First Rule: {results_list[0]}")
-else:
-    print("No rules found.")
