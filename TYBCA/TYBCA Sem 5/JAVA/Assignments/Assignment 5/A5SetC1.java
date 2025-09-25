@@ -4,9 +4,9 @@ import java.sql.*;
 
 public class A5SetC1 {
     public static void main(String[] args) {
-        String url = "jdbc:postgresql://localhost:5432/your_database";
-        String user = "your_username";
-        String password = "your_password";
+        String url = "jdbc:postgresql://localhost:5432/te2202"; 
+        String user = "postgres"; 
+        String pass = "12345"; 
 
         JFrame frame = new JFrame("Student Details");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -19,7 +19,7 @@ public class A5SetC1 {
 
         try {
             Class.forName("org.postgresql.Driver");
-            Connection con = DriverManager.getConnection(url, user, password);
+            Connection con = DriverManager.getConnection(url, user, pass);
 
             String query = "SELECT * FROM Student";
             Statement stmt = con.createStatement();

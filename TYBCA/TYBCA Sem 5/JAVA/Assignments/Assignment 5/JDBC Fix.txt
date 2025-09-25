@@ -1,0 +1,8 @@
+JDBC Driver, add this in the same directory where the programs are located
+https://jdbc.postgresql.org/download/
+
+sudo -u postgres psql
+
+ALTER USER postgres WITH PASSWORD '12345';
+
+java -cp .:postgresql-42.7.8.jar filename

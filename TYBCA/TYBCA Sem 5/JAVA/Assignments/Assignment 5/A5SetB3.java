@@ -3,13 +3,13 @@ import java.util.Scanner;
 
 public class A5SetB3 {
     public static void main(String[] args) {
-        String url = "jdbc:postgresql://localhost:5432/your_database";
-        String user = "your_username";
-        String password = "your_password";
+        String url = "jdbc:postgresql://localhost:5432/te2202"; 
+        String user = "postgres"; 
+        String pass = "12345"; 
 
         try (Scanner sc = new Scanner(System.in)) {
             Class.forName("org.postgresql.Driver");
-            Connection con = DriverManager.getConnection(url, user, password);
+            Connection con = DriverManager.getConnection(url, user, pass);
 
             int choice;
             do {

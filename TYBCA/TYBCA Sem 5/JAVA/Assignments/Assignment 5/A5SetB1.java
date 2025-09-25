@@ -2,13 +2,13 @@ import java.sql.*;
 
 public class A5SetB1 {
     public static void main(String[] args) {
-        String url = "jdbc:postgresql://localhost:5432/your_database";
-        String user = "your_username";
-        String password = "your_password";
+        String url = "jdbc:postgresql://localhost:5432/te2202"; 
+        String user = "postgres"; 
+        String pass = "12345"; 
 
         try {
             Class.forName("org.postgresql.Driver");
-            Connection con = DriverManager.getConnection(url, user, password);
+            Connection con = DriverManager.getConnection(url, user, pass);
 
             // 1. Search all persons born in 1986
             String query1 = "SELECT * FROM Person WHERE birth_year = 1986";
