@@ -1,0 +1,11 @@
+CREATE TABLE Course (
+    Code VARCHAR(10) PRIMARY KEY,
+    Name VARCHAR(50),
+    Department VARCHAR(50),
+    Number_of_students INT
+);
+
+INSERT INTO Course (Code, Name, Department, Number_of_students) VALUES
+('C101', 'BCA Science', 'Computer Science', 500),
+('C102', 'MCA Science', 'Computer Science', 300),
+('C103', 'BBA Management', 'Management', 400);

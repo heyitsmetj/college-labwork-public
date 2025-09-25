@@ -1,0 +1,13 @@
+CREATE TABLE Country (
+    Name VARCHAR(50),
+    Continent VARCHAR(50),
+    Capital VARCHAR(50),
+    Region VARCHAR(50)
+);
+
+INSERT INTO Country (Name, Continent, Capital, Region) VALUES
+('USA', 'North America', 'Washington DC', 'West'),
+('Canada', 'North America', 'Ottawa', 'East'),
+('Mexico', 'North America', 'Mexico City', 'West'),
+('Brazil', 'South America', 'Brasilia', 'East'),
+('Chile', 'South America', 'Santiago', 'West');

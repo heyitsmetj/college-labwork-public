@@ -1,0 +1,21 @@
+CREATE TABLE Person (
+    PID INT PRIMARY KEY,
+    name VARCHAR(50),
+    gender VARCHAR(10),
+    birth_year INT
+);
+
+INSERT INTO Person VALUES
+(1, 'Tejas', 'Male', 2000),
+(2, 'Anjali', 'Female', 2002),
+(3, 'Ravi', 'Male', 1986),
+(4, 'Sneha', 'Female', 2001),
+(5, 'Amit', 'Male', 1995),
+(6, 'Priya', 'Female', 1998),
+(7, 'Karan', 'Male', 2003),
+(8, 'Riya', 'Female', 2005),
+(9, 'Siddharth', 'Male', 1986),
+(10, 'Neha', 'Female', 2000),
+(11, 'Rahul', 'Male', 2002),
+(12, 'Isha', 'Female', 2004);
+

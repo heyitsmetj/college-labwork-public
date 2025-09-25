@@ -1,0 +1,10 @@
+CREATE TABLE District (
+    Name VARCHAR(50) PRIMARY KEY,
+    Area NUMERIC(10,2),
+    Population INT
+);
+
+INSERT INTO District (Name, Area, Population) VALUES
+('Pune', 156.2, 3120000),
+('Mumbai', 603.4, 12400000),
+('Nagpur', 227.0, 2400000);

@@ -1,0 +1,11 @@
+CREATE TABLE Student (
+    RollNumber INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Percentage NUMERIC(5,2)
+);
+
+INSERT INTO Student (RollNumber, Name, Percentage) VALUES
+(1, 'Tejas', 85.5),
+(2, 'Anjali', 91.0),
+(3, 'Ravi', 78.2),
+(4, 'Sneha', 88.7);
