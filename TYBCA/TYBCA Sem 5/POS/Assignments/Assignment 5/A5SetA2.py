@@ -1,6 +1,5 @@
 from heapq import heappush, heappop
 
-# --- Graph ---
 graph = {
     'A': {'B':6, 'F':3},
     'B': {'A':6, 'C':3, 'D':2},
@@ -19,10 +18,9 @@ heuristic = {
     'G':5, 'H':3, 'I':1, 'J':5
 }
 
-# --- A* Algorithm ---
 def a_star(start, goal):
     pq = []
-    heappush(pq, (heuristic[start], 0, start, [start]))  # (f, g, node, path)
+    heappush(pq, (heuristic[start], 0, start, [start]))
     visited = set()
 
     while pq:
@@ -41,7 +39,6 @@ def a_star(start, goal):
 
     return None, float('inf')
 
-# Run
 path, cost = a_star('A', 'J')
 print("Best path:", " -> ".join(path))
 print("Total cost:", cost)
