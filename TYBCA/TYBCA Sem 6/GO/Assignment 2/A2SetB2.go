@@ -1,0 +1,13 @@
+package main
+import "fmt"
+
+func nameret(n int) (x, y int){
+	x = n + 5
+	y = n - 5
+	return
+}
+
+func main(){
+	var x, y int = nameret(15)
+	fmt.Printf("n + 5: %v, n - 5: %v\n", x, y)
+}
