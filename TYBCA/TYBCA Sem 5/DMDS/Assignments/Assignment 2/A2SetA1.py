@@ -9,7 +9,7 @@ Created on Mon Jul 21 16:16:30 2025
 import pandas as pd
 import numpy as np
 
-dataset = pd.read_csv('Data.csv')
+dataset = pd.read_csv('D:/College/college-labwork/TYBCA/TYBCA Sem 5/DMDS/Assignments/Assignment 2/Data.csv')
 miss_values = dataset.isnull()
 print(miss_values)
 
