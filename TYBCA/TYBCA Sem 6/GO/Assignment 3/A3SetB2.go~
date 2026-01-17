@@ -1,0 +1,20 @@
+package main
+import "fmt"
+
+func main(){
+	arr := [10]int{10, 50, 40, 20, 60, 30, 100, 80, 70, 90}
+	var temp int
+	fmt.Println("Array before Sorting:", arr)
+	
+	for i := 0; i < len(arr); i++ {
+		for j := 0; j < len(arr) - i - 1; j++ {
+			if arr[j] > arr[j + 1] {
+				temp = arr[j]
+				arr[j] = arr[j + 1]
+				arr[j] = temp
+			}
+		}
+	}
+	
+	fmt.Println("Array after Sorting:", arr)
+}

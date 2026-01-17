@@ -1,0 +1,43 @@
+package main
+
+import "fmt"
+
+type Employee struct {
+	eno   int
+	ename string
+	esal  float64
+}
+
+func main() {
+	var n int
+	fmt.Print("Enter number of employees: ")
+	fmt.Scan(&n)
+
+	emp := make([]Employee, n)
+
+	for i := 0; i < n; i++ {
+		fmt.Printf("\nEnter details of employee %d\n", i+1)
+
+		fmt.Print("Employee No: ")
+		fmt.Scan(&emp[i].eno)
+
+		fmt.Print("Employee Name: ")
+		fmt.Scan(&emp[i].ename)
+
+		fmt.Print("Employee Salary: ")
+		fmt.Scan(&emp[i].esal)
+	}
+
+	maxEmp := emp[0]
+	for i := 1; i < n; i++ {
+		if emp[i].esal > maxEmp.esal {
+			maxEmp = emp[i]
+		}
+	}
+
+	fmt.Println("\nEmployee with Maximum Salary")
+	fmt.Println("Employee No:", maxEmp.eno)
+	fmt.Println("Employee Name:", maxEmp.ename)
+	fmt.Println("Employee Salary:", maxEmp.esal)
+}
+
