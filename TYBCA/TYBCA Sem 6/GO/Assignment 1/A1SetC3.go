@@ -31,7 +31,7 @@ func main() {
 				flag = false
 				break
 			}
-			result = num1 - num2
+			result = num1 / num2
 			break
 		default: 
 			fmt.Println("\nInvalid Choice! Exiting...")
