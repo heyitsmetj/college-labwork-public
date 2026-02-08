@@ -1,0 +1,31 @@
+package main
+import "fmt"
+
+type Students struct {
+	roll_no   int
+	stud_name string
+	mark1     int
+	mark2     int
+	mark3     int
+	total     int
+	mrkAvg    float32
+}
+
+func main() {
+	var Student1 Students
+
+	Student1.roll_no = 1
+	Student1.stud_name = "Rahul"
+	Student1.mark1 = 50
+	Student1.mark2 = 40
+	Student1.mark3 = 70
+
+	Student1.total = Student1.mark1 + Student1.mark2 + Student1.mark3
+	Student1.mrkAvg = float32(Student1.total) / 3
+
+	fmt.Printf("Student Roll No.: %d\n", Student1.roll_no)
+	fmt.Printf("Student Name: %s\n", Student1.stud_name)
+	fmt.Printf("Total Marks: %d\n", Student1.total)
+	fmt.Printf("Average Marks: %.2f\n", Student1.mrkAvg)
+}
+
