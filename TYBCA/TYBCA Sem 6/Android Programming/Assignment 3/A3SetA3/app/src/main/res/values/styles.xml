@@ -1,0 +1,30 @@
+<resources>
+
+    <style name="numBtn">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">80dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:background">@drawable/btn_number</item>
+        <item name="android:layout_margin">6dp</item>
+    </style>
+
+    <style name="opBtn">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">80dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:background">@drawable/btn_operator</item>
+        <item name="android:layout_margin">6dp</item>
+    </style>
+
+    <style name="eqBtn">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">80dp</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:background">@drawable/btn_equal</item>
+        <item name="android:layout_margin">6dp</item>
+    </style>
+
+</resources>
