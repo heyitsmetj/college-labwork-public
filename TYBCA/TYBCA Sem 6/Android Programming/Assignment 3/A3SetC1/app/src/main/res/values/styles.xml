@@ -1,0 +1,9 @@
+<resources>
+
+    <!-- Spinner text style (auto adapts dark mode) -->
+    <style name="SpinnerTextStyle">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+</resources>

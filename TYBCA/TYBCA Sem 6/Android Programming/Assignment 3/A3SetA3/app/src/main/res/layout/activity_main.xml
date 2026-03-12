@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#121212"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Container (centered completely) -->
+    <LinearLayout
+        android:id="@+id/calculatorContainer"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Display -->
+        <EditText
+            android:id="@+id/edtDisplay"
+            android:layout_width="300dp"
+            android:layout_height="90dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#888888"
+            android:textSize="36sp"
+            android:gravity="end|center_vertical"
+            android:background="#000000"
+            android:padding="20dp"
+            android:hint="0"
+            android:inputType="none"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Button Grid -->
+        <GridLayout
+            android:columnCount="4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button style="@style/numBtn" android:text="7" android:onClick="numberClick"/>
+            <Button style="@style/numBtn" android:text="8" android:onClick="numberClick"/>
+            <Button style="@style/numBtn" android:text="9" android:onClick="numberClick"/>
+            <Button style="@style/opBtn" android:text="/" android:onClick="operatorClick"/>
+
+            <Button style="@style/numBtn" android:text="4" android:onClick="numberClick"/>
+            <Button style="@style/numBtn" android:text="5" android:onClick="numberClick"/>
+            <Button style="@style/numBtn" android:text="6" android:onClick="numberClick"/>
+            <Button style="@style/opBtn" android:text="*" android:onClick="operatorClick"/>
+
+            <Button style="@style/numBtn" android:text="1" android:onClick="numberClick"/>
+            <Button style="@style/numBtn" android:text="2" android:onClick="numberClick"/>
+            <Button style="@style/numBtn" android:text="3" android:onClick="numberClick"/>
+            <Button style="@style/opBtn" android:text="-" android:onClick="operatorClick"/>
+
+            <Button style="@style/numBtn" android:text="0" android:onClick="numberClick"/>
+            <Button style="@style/numBtn" android:text="C" android:onClick="clearClick"/>
+            <Button style="@style/eqBtn" android:text="=" android:onClick="equalClick"/>
+            <Button style="@style/opBtn" android:text="+" android:onClick="operatorClick"/>
+
+        </GridLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
